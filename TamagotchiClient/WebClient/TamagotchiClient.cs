@@ -35,8 +35,12 @@ namespace TamagotchiClient.WebClient
                 HttpResponseMessage response = await client.PostAsync(url, stringContent); 
                 if (response.IsSuccessStatusCode)
                 {
+                    JsonSerializerOptions options = new JsonSerializerOptions()
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
                     string content = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<PlayerDTO>(content);
+                    return JsonSerializer.Deserialize<PlayerDTO>(content,options);
                 }
                 else
                     return null;
