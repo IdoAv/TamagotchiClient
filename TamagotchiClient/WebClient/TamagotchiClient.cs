@@ -23,25 +23,7 @@ namespace TamagotchiClient.WebClient
             this.client = new HttpClient(handler, true);
         }
 
-        public async Task<string> TestAsync()
-        {
-            string url = this.baseUrl + "/Test";
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(url);
-                if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    return content;
-                }
-                else
-                    return "";
-            }
-            catch (Exception)
-            {
-                return "";
-            }
-        }
+
 
         public async Task<PlayerDTO> LoginAsync(UserDTO user)
         {
