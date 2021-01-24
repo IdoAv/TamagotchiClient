@@ -34,7 +34,7 @@ namespace TamagotchiClient.WebClient
                     return content;
                 }
                 else
-                    return string.Empty;
+                    return "";
             }
             catch (Exception)
             {
