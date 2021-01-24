@@ -1,6 +1,7 @@
 ﻿using System;
 using TamagotchiClient.WebClient;
 using System.Threading.Tasks;
+using TamagotchiClient.UI;
 
 namespace TamagotchiClient
 {
@@ -8,10 +9,8 @@ namespace TamagotchiClient
     {
         static void Main(string[] args)
         {
-            TamagotchiClient.WebClient.TamagotchiClient client = new WebClient.TamagotchiClient(@"https://localhost:44335/Tamagotchi");
-            Task<string> t = client.TestAsync();
-            t.Wait();
-            Console.WriteLine(t.Result);
+            UIMain main = new UIMain(new HomeScreen());
+            main.StartApplication();
         }
     }
 }

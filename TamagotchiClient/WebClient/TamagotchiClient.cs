@@ -50,7 +50,7 @@ namespace TamagotchiClient.WebClient
                 return null;
             }
         }
-        public async Task<bool> Logout()
+        public async Task<bool> LogoutAsync()
         {
             string url = this.baseUrl + "/Logout";
             try

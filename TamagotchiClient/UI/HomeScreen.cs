@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WebServicesProject.UI
+namespace TamagotchiClient.UI
 {
     class HomeScreen : Screen
     {

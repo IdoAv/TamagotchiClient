@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TamagotchiClient.DataTransferObjects;
+using TamagotchiClient.WebClient;
 
-namespace WebServicesProject.UI
+namespace TamagotchiClient.UI
 {
     class UIMain
-    {/*
+    {
         private readonly Screen initialScreen;
-        public static Player CurrentPlayer { get; set; }
-        public static TamagotchiContext Db { get; set; }
+        public static PlayerDTO CurrentPlayer { get; set; }
+        public static TamagotchiClient.WebClient.TamagotchiClient Client { get; set; }
 
         public UIMain(Screen initialScreen)
         {
@@ -18,11 +20,10 @@ namespace WebServicesProject.UI
         public void StartApplication()
         {
             CurrentPlayer = null;
-            Db = new TamagotchiContext();
+            Client = new TamagotchiClient.WebClient.TamagotchiClient(@"https://localhost:44335/Tamagotchi");
             this.initialScreen.Show();
-            Db.SaveChanges();
         }
-        */
+        
 
     }
 }

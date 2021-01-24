@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TamagotchiClient.DataTransferObjects;
+using System.Threading.Tasks;
 
-namespace WebServicesProject.UI
+namespace TamagotchiClient.UI
 {
     class LogInScreen : Screen
     {
         public LogInScreen() : base("log in") { }
-        /*
+        
         public override void Show()
         {
             //Clear screen and set title (implemented by Screen Show)
@@ -20,8 +22,6 @@ namespace WebServicesProject.UI
                 char c = Console.ReadKey().KeyChar;
                 if (c == 'Y' || c == 'y')
                 {
-                    //Save all changes to DB before logging out
-                    UIMain.Db.SaveChanges();
                     UIMain.CurrentPlayer = null;
                 }
             }
@@ -37,8 +37,13 @@ namespace WebServicesProject.UI
                 Console.WriteLine($"Please enter your password: ");
                 string password = Console.ReadLine();
 
-                UIMain.CurrentPlayer = UIMain.Db.LogIn(email,password);
-
+               Task<PlayerDTO> t  = UIMain.Client.LoginAsync(new UserDTO()
+                {
+                    Email = email,
+                    Password = password
+                });
+                t.Wait();
+                UIMain.CurrentPlayer = t.Result;
                 if (UIMain.CurrentPlayer == null)
                 {
                     Console.WriteLine("Login fail!! Press any key to try again!");
@@ -55,10 +60,8 @@ namespace WebServicesProject.UI
             List<Tuple<Screen, string>> lst = new List<Tuple<Screen, string>>();
             lst.Add(new Tuple<Screen, string>(new ShowPlayerScreen(), "show player"));
             lst.Add(new Tuple<Screen, string>(new ShowAnimalsScreen(), "show animals"));
-            lst.Add(new Tuple<Screen, string>(new ChooseFunctionScreen(), "choose function for active animal"));
-            lst.Add(new Tuple<Screen, string>(new ShowHistoryOfFunctionsScreen(), "show history of functions"));
             return new MainMenu("menu", lst);
         }
-        */
+        
     }
 }
