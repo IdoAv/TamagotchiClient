@@ -69,5 +69,30 @@ namespace TamagotchiClient.WebClient
             }
 
         }
+        public async Task<List<AnimalDTO>> GetAnimals()
+        {
+            string url = this.baseUrl + $"/GetAnimals";
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions()
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<List<AnimalDTO>>(content, options);
+                }
+                else
+                    return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
     }
+    
 }
