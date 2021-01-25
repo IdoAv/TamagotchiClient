@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-
+using TamagotchiClient.DataTransferObjects;
+using System.Threading.Tasks;
 namespace TamagotchiClient.UI
 {
     class RegisterScreen : Screen
     {
         public RegisterScreen() : base("register") { }
-        
-        /*
+
+
         public override void Show()
         {
             base.Show();
@@ -19,7 +20,7 @@ namespace TamagotchiClient.UI
             string lastName = Console.ReadLine();
             Console.WriteLine("please enter your user Name: ");
             string userName = Console.ReadLine();
-            while (UIMain.Db.PlayerExistByUserName(userName))
+            while (UIMain.Client.UserNameExist(userName).Result)
             {
                 Console.WriteLine("user name exists!! type again:");
                 userName = Console.ReadLine();
@@ -34,7 +35,7 @@ namespace TamagotchiClient.UI
                 Console.WriteLine("invalid email!! type again:");
                 email = Console.ReadLine();
             }
-            while (UIMain.Db.PlayerExistByEmail(email))
+            while (UIMain.Client.EmailExist(email).Result)
             {
                 Console.WriteLine("email exists!! type again:");
                 email = Console.ReadLine();
@@ -48,13 +49,13 @@ namespace TamagotchiClient.UI
             string gender = Console.ReadLine();
             Console.WriteLine("do you wanna pass your birth date:");
             string answer = Console.ReadLine();
-            while(answer.ToLower() != "yes" && answer.ToLower() != "no")
+            while (answer.ToLower() != "yes" && answer.ToLower() != "no")
             {
                 Console.WriteLine("invalid answer");
                 answer = Console.ReadLine();
             }
             DateTime? birthDate = null;
-            if(answer == "yes")
+            if (answer == "yes")
             {
                 Console.WriteLine("please enter your birth year:");
                 int year = int.Parse(Console.ReadLine());
@@ -64,7 +65,7 @@ namespace TamagotchiClient.UI
                 int day = int.Parse(Console.ReadLine());
                 birthDate = new DateTime(year, month, day);
             }
-            Player p = new Player()
+            PlayerDTO p = new PlayerDTO()
             {
                 PlayerFirstName = firstName,
                 PlayerLastName = lastName,
@@ -76,16 +77,21 @@ namespace TamagotchiClient.UI
             };
             try
             {
-                UIMain.Db.Register(p);
-                Console.WriteLine("you have registered successfully");
+                Task<bool> t = UIMain.Client.RegisterAsync(p);
+                t.Wait();
+                if (t.Result)
+                    Console.WriteLine("you have registered successfully");
+                else
+                    throw new Exception();
             }
-            catch(Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("something went wrong...");
             }
             Console.ReadKey(true);
 
         }
-        */
+
     }
 }
+
