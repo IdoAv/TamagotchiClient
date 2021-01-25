@@ -93,6 +93,72 @@ namespace TamagotchiClient.WebClient
             }
 
         }
+        public async Task<bool> RegisterAsync(PlayerDTO player)
+        {
+            string url = this.baseUrl + "/Register";
+            try
+            {
+                string json = JsonSerializer.Serialize(player);
+                StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(url, stringContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> UserNameExist(string userName)
+        {
+            string url = this.baseUrl + $"/UserNameExist?userName={userName}";
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions()
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<bool>(content, options);
+                }
+                else
+                    return true;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+        }
+        public async Task<bool> EmailExist(string email)
+        {
+            string url = this.baseUrl + $"/EmailExist?email={email}";
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions()
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<bool>(content, options);
+                }
+                else
+                    return true;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+        }
     }
     
 }
