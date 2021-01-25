@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TamagotchiClient.DataTransferObjects; 
 
 namespace TamagotchiClient.UI
 {
@@ -11,9 +12,9 @@ namespace TamagotchiClient.UI
 
         public override void Show()
         {
-            /*
+            
             base.Show();
-            Player p = UIMain.CurrentPlayer;
+            PlayerDTO p = UIMain.CurrentPlayer;
             Object object1 = new
             {
                 id = p.PlayerId,
@@ -26,7 +27,7 @@ namespace TamagotchiClient.UI
             ObjectView o = new ObjectView("",object1);
             o.Show();
             Console.ReadKey();
-            */
+            
             
             
             
